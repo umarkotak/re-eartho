@@ -12,3 +12,9 @@ deploy-migrate:
 
 deploy-bundle:
 	ssh root@47.254.247.135 'cd projects/be/eartho && bundle install'
+
+deploy-initiator-init:
+	ssh root@47.254.247.135 'cd projects/be/eartho && rake initiator:generate_initial_data'
+
+deploy-initiator-destroy:
+	ssh root@47.254.247.135 'cd projects/be/eartho && rake initiator:destroyer_run'
