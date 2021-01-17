@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2021_01_15_145959) do
     t.text "position"
     t.text "tag"
     t.text "description"
+    t.text "text_content"
     t.text "image_url"
     t.text "video_url"
     t.integer "count_like"

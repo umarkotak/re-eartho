@@ -24,3 +24,9 @@ deploy-initiator-init:
 
 deploy-initiator-destroy:
 	ssh root@47.254.247.135 'cd projects/be/eartho && rake initiator:destroyer_run'
+
+reset-local:
+	bin/rails db:drop && bin/rails db:create && bin/rails db:migrate && bin/rake initiator:generate_initial_data
+
+reset-production:
+	rails db:drop && rails db:create && rails db:migrate && rake initiator:generate_initial_data

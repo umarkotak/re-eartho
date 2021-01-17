@@ -25,7 +25,7 @@ module Global
               count_comment: 0,
               tag: content.tag,
               creator_name: content.user.username,
-              created_at: content.created_at.strftime("%Y-%m-%d %H:%M")
+              created_at: content.created_at.localtime.strftime("%Y-%m-%d %H:%M")
             }
           end
         }

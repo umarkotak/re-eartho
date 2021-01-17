@@ -10,8 +10,8 @@ namespace :initiator do
     # data users
     sha256_password = Digest::SHA2.hexdigest('123456')
     admin = User.create(username: 'admin', email: 'admin@admin.com', password_encrypted: sha256_password, role: 'admin', status: '1')
-    user = User.create(username: 'user', email: 'user@user.com', password_encrypted: sha256_password, role: 'user', status: '1')
-    user_red = User.create(username: 'user-red', email: 'user-red@user.com', password_encrypted: sha256_password, role: 'user', status: '1')
+    user = User.create(username: 'user', email: 'user@user.com', password_encrypted: sha256_password, role: 'basic_user', status: '1')
+    user_red = User.create(username: 'user-red', email: 'user-red@user.com', password_encrypted: sha256_password, role: 'basic_user', status: '1')
 
     # data feeds
     feed = Feed.create(title: 'default')
