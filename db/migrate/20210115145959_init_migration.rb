@@ -32,6 +32,7 @@ class InitMigration < ActiveRecord::Migration[6.1]
       t.text :position
       t.text :tag
       t.text :description
+      t.text :text_content
       t.text :image_url
       t.text :video_url
       t.integer :count_like

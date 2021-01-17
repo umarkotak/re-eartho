@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   get 'ping', to: 'ping#ping'
   get 'home', to: 'global/home#index'
   options 'home', to: 'cors#allow'
+  get 'contents/:id', to: 'global/contents#show'
 end

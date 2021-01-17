@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
+  rescue_from StandardError, with: :rescue_standard_error
+
   def render_response(data: {}, success: true, errors: [], status: 200)
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS, PUT, DELETE'
@@ -12,5 +14,16 @@ class ApplicationController < ActionController::Base
       errors: errors
     }
     render json: json, status: status
+  end
+
+  def rescue_standard_error(exception)
+    render_response(
+      data: {},
+      success: false,
+      errors: [
+        exception.message
+      ],
+      status: 500
+    )
   end
 end
