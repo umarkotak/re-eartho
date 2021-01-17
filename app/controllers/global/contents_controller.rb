@@ -41,7 +41,7 @@ module Global
     end
 
     def create_content_params
-      params.permit(:title, :description, :text_content, :image_url, :video_url)
+      params.permit(:title, :description, :text_content, :image_url, :video_url, :category_id)
         .to_h.merge!(user_id: @user.id)
     end
   end

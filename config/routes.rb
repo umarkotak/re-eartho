@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   post 'contents', to: 'global/contents#create'
   options 'contents', to: 'cors#allow'
 
+  get 'categories', to: 'global/categories#index'
+  options 'categories', to: 'cors#allow'
+
   post 'users/register', to: 'global/users#register'
   options 'users/register', to: 'cors#allow'
   post 'users/login', to: 'global/users#login'
