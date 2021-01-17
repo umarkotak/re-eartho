@@ -5,6 +5,12 @@ module Global
       render_response(data: serialize_content(content))
     end
 
+    def create
+      authenticate_user
+      created_content = Content.create!(create_content_params)
+      render_response(data: { id: created_content.id })
+    end
+
     private
 
     def content_id
@@ -32,6 +38,11 @@ module Global
           }
         end
       }
+    end
+
+    def create_content_params
+      params.permit(:title, :description, :text_content, :image_url, :video_url)
+        .to_h.merge!(user_id: @user.id)
     end
   end
 end

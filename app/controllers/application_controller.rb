@@ -3,6 +3,14 @@ class ApplicationController < ActionController::Base
 
   rescue_from StandardError, with: :rescue_standard_error
 
+  def authenticate_user
+    @user = User.find_by("session_key = :session_key", session_key: request.headers['Authorization'])
+    return if @user
+    raise 'Unauthorized request'
+  rescue StandardError => e
+    raise "Unauthorized request : #{e.message}"
+  end
+
   def render_response(data: {}, success: true, errors: [], status: 200)
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS, PUT, DELETE'

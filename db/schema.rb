@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2021_01_15_145959) do
     t.text "username"
     t.text "email"
     t.text "password_encrypted"
-    t.text "auth_token"
+    t.text "session_key"
     t.text "role"
     t.text "status"
     t.datetime "created_at", precision: 6, null: false

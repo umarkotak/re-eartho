@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   get 'contents/:id', to: 'global/contents#show'
   options 'contents/:id', to: 'cors#allow'
+  post 'contents', to: 'global/contents#create'
+  options 'contents', to: 'cors#allow'
 
   post 'users/register', to: 'global/users#register'
   options 'users/register', to: 'cors#allow'

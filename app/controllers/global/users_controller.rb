@@ -43,11 +43,11 @@ module Global
         raise 'invalid email or password'
       end
 
-      session_token = "Bearer #{SecureRandom.uuid}-#{SecureRandom.uuid}-#{SecureRandom.uuid}"
-      user.update!(auth_token: session_token)
+      session_key = "Bearer #{SecureRandom.uuid}-#{SecureRandom.uuid}-#{SecureRandom.uuid}"
+      user.update!(session_key: session_key)
 
       {
-        authentication_token: session_token,
+        session_key: session_key,
         username: user.username,
         email: user.email,
         role: user.role

@@ -6,7 +6,7 @@ class InitMigration < ActiveRecord::Migration[6.1]
       t.text :username
       t.text :email
       t.text :password_encrypted
-      t.text :auth_token
+      t.text :session_key
       t.text :role
       t.text :status
       t.timestamps
