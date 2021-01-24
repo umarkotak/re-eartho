@@ -19,6 +19,8 @@ module Global
     end
 
     def serialize_content(content)
+      likes = []
+
       {
         content_type: content.content_type,
         title: content.title,
@@ -33,9 +35,12 @@ module Global
         creator_avatar_url: content.user.generated_avatar_url,
         created_at: content.created_at.localtime.strftime("%Y-%m-%d %H:%M"),
         comments: content.content_comments.map do |comment|
+          is_liked = content.liked_by_user(comment.user.id)
+          likes << comment.user.username if is_liked
           {
             username: comment.user.username,
             avatar_url: comment.user.generated_avatar_url,
+            liked_by_me: is_liked,
             comment: comment.comment,
             created_at: comment.created_at.localtime.strftime("%Y-%m-%d %H:%M")
           }
@@ -43,7 +48,8 @@ module Global
         liked_by_me: content.liked_by_user(@user&.id),
         category: {
           title: content.category.title
-        }
+        },
+        user_who_likes: likes.sample(3)
       }
     end
 
