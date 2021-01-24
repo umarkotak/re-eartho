@@ -1,6 +1,7 @@
 module Global
   class ContentsController < ApiController
     def show
+      fetch_user
       content = Content.includes(:user, content_comments: [:user]).find(content_id)
       render_response(data: serialize_content(content))
     end
@@ -25,8 +26,8 @@ module Global
         text_content: content.text_content,
         image_url: content.image_url,
         video_url: content.video_url,
-        count_like: content.count_like,
-        count_comment: content.count_comment,
+        count_like: content.count_like || 0,
+        count_comment: content.count_comment || 0,
         tag: content.tag,
         creator_name: content.user.username,
         created_at: content.created_at.localtime.strftime("%Y-%m-%d %H:%M"),
@@ -36,7 +37,8 @@ module Global
             comment: comment.comment,
             created_at: comment.created_at.localtime.strftime("%Y-%m-%d %H:%M")
           }
-        end
+        end,
+        liked_by_me: content.liked_by_user(@user&.id)
       }
     end
 

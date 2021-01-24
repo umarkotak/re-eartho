@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
 
   rescue_from StandardError, with: :rescue_standard_error
 
+  def fetch_user
+    @user = User.find_by("session_key = :session_key", session_key: request.headers['Authorization'])
+  end
+
   def authenticate_user
     @user = User.find_by("session_key = :session_key", session_key: request.headers['Authorization'])
     return if @user

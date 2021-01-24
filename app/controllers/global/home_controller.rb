@@ -1,6 +1,7 @@
 module Global
   class HomeController < ApiController
     def index
+      fetch_user
       feed = Feed.includes(categories: [contents: [:user]]).last
       data = { feeds: serialize_feed(feed) }
       render_response(data: data)
@@ -21,11 +22,12 @@ module Global
               title: content.title,
               description: content.description,
               image_url: content.image_url,
-              count_like: 0,
-              count_comment: 0,
+              count_like: content.count_like || 0,
+              count_comment: content.count_comment || 0,
               tag: content.tag,
               creator_name: content.user.username,
-              created_at: content.created_at.localtime.strftime("%Y-%m-%d %H:%M")
+              created_at: content.created_at.localtime.strftime("%Y-%m-%d %H:%M"),
+              liked_by_me: content.liked_by_user(@user&.id)
             }
           end
         }
