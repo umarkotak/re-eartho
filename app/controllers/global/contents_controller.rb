@@ -30,10 +30,12 @@ module Global
         count_comment: content.count_comment.to_i,
         tag: content.tag,
         creator_name: content.user.username,
+        creator_avatar_url: content.user.generated_avatar_url,
         created_at: content.created_at.localtime.strftime("%Y-%m-%d %H:%M"),
         comments: content.content_comments.map do |comment|
           {
             username: comment.user.username,
+            avatar_url: comment.user.generated_avatar_url,
             comment: comment.comment,
             created_at: comment.created_at.localtime.strftime("%Y-%m-%d %H:%M")
           }

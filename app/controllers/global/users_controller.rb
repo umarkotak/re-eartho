@@ -50,7 +50,8 @@ module Global
         session_key: session_key,
         username: user.username,
         email: user.email,
-        role: user.role
+        role: user.role,
+        avatar_url: user.generated_avatar_url
       }
     end
   end
