@@ -7,7 +7,7 @@ module Global
       raise "user already like this content" if content_like.present?
 
       content.transaction do
-        content.update!(count_like: content.count_like + 1)
+        content.update!(count_like: content.count_like.to_i + 1)
         ContentLike.create!(content_id: content.id, user_id: @user.id)
       end
       render_response(data: { id: content.id })
@@ -20,7 +20,7 @@ module Global
       raise "user have not like this content" if content_like.blank?
 
       content.transaction do
-        content.update!(count_like: content.count_like - 1)
+        content.update!(count_like: content.count_like.to_i - 1)
         content_like.delete
       end
       render_response(data: { id: content.id })
