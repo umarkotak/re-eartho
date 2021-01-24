@@ -31,6 +31,7 @@ module Global
         count_like: content.count_like.to_i,
         count_comment: content.count_comment.to_i,
         tag: content.tag,
+        creator_id: content.user.id,
         creator_name: content.user.username,
         creator_avatar_url: content.user.generated_avatar_url,
         created_at: content.created_at.localtime.strftime("%Y-%m-%d %H:%M"),
