@@ -38,7 +38,10 @@ module Global
             created_at: comment.created_at.localtime.strftime("%Y-%m-%d %H:%M")
           }
         end,
-        liked_by_me: content.liked_by_user(@user&.id)
+        liked_by_me: content.liked_by_user(@user&.id),
+        category: {
+          title: content.category.title
+        }
       }
     end
 
