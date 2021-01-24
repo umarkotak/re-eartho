@@ -24,4 +24,9 @@ Rails.application.routes.draw do
   options 'users/register', to: 'cors#allow'
   post 'users/login', to: 'global/users#login'
   options 'users/login', to: 'cors#allow'
+
+  get 'profile/me', to: 'global/profile#me'
+  options 'profile/me', to: 'cors#allow'
+  get 'profile/:id/info', to: 'global/profile#info'
+  options 'profile/:id/info', to: 'cors#allow'
 end
