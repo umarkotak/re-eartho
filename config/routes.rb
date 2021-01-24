@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   options 'contents/:id/like', to: 'cors#allow'
   post 'contents/:id/unlike', to: 'global/content_likes#unlike'
   options 'contents/:id/unlike', to: 'cors#allow'
+  get 'content_comments/:id', to: 'global/content_comments#index'
+  options 'content_comments/:id', to: 'cors#allow'
 
   get 'categories', to: 'global/categories#index'
   options 'categories', to: 'cors#allow'

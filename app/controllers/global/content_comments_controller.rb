@@ -1,5 +1,10 @@
 module Global
   class ContentCommentsController < ApiController
+    def index
+      result = []
+      render_response(data: result)
+    end
+
     def comment
       authenticate_user
       content.transaction do
