@@ -1,8 +1,8 @@
 module Global
   class ContentCommentsController < ApiController
     def index
-      result = []
-      render_response(data: result)
+      comments = ContentComment.where(content_id: content_id)
+      render_response(data: serialize_comments(comments))
     end
 
     def comment
@@ -22,6 +22,19 @@ module Global
 
     def content_id
       params[:id]
+    end
+
+    def serialize_comments(comments)
+      comments.map do |comment|
+        is_liked = content.liked_by_user(comment.user.id)
+        {
+          username: comment.user.username,
+          avatar_url: comment.user.generated_avatar_url,
+          liked_by_me: is_liked,
+          comment: comment.comment,
+          created_at: comment.created_at.localtime.strftime("%Y-%m-%d %H:%M")
+        }
+      end
     end
   end
 end

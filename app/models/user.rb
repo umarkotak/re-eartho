@@ -25,4 +25,8 @@ class User < ApplicationRecord
 
     "http://47.254.247.135/eartho/default_avatar/#{colors[idx]}/#{prefix}.png"
   end
+
+  def liked_content_ids
+    @liked_content_ids ||= ContentLike.where(user_id: id).pluck(:id)
+  end
 end
