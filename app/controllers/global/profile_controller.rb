@@ -20,6 +20,7 @@ module Global
         email: @user.email,
         role: @user.role,
         status: @user.status,
+        avatar_url: @user.generated_avatar_url,
         categories: categories.map do |category|
           {
             category_id: category.id,
@@ -64,6 +65,7 @@ module Global
         email: selected_user.email,
         role: selected_user.role,
         status: selected_user.status,
+        avatar_url: selected_user.generated_avatar_url,
         categories: categories.map do |category|
           {
             category_id: category.id,
