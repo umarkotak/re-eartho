@@ -6,10 +6,38 @@ module Global
       render_response(data: serialize_content(content))
     end
 
+    def popular
+      popular_contents = fetch_popular_contents
+      render_response(data: popular_contents)
+    end
+
     def create
       authenticate_user
       created_content = Content.create!(create_content_params)
       render_response(data: { id: created_content.id })
+    end
+
+    def update
+      authenticate_user
+      content = Content.find(content_id)
+      if content.user_id != @user.id
+        render_response(errors: ['forbidden access'], status: 401)
+        return
+      end
+      content.assign_attributes(create_content_params)
+      content.save!
+      render_response(data: { id: content.id })
+    end
+
+    def delete
+      authenticate_user
+      content = Content.find(content_id)
+      if content.user_id != @user.id
+        render_response(errors: ['forbidden access'], status: 401)
+        return
+      end
+      content.delete
+      render_response(data: { id: content.id })
     end
 
     private
@@ -58,6 +86,13 @@ module Global
     def create_content_params
       params.permit(:title, :description, :text_content, :image_url, :video_url, :category_id)
         .to_h.merge!(user_id: @user.id)
+    end
+
+    def fetch_popular_contents
+      contents = Content.order("count_like desc").limit(10)
+      contents.map do |content|
+        serialize_content(content)
+      end
     end
   end
 end

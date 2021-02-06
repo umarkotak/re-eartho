@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   get 'home', to: 'global/home#index'
   options 'home', to: 'cors#allow'
 
+  get 'contents/popular', to: 'global/contents#popular'
+  options 'contents/popular', to: 'cors#allow'
+  patch 'contents/:id', to: 'global/contents#update'
+  delete 'contents/:id', to: 'global/contents#delete'
   get 'contents/:id', to: 'global/contents#show'
   options 'contents/:id', to: 'cors#allow'
   post 'contents', to: 'global/contents#create'
