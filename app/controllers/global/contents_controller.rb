@@ -86,6 +86,7 @@ module Global
       end
 
       {
+        id: content.id,
         content_type: content.content_type,
         title: content.title,
         description: content.description,
