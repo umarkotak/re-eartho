@@ -39,7 +39,8 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
   # host = 'http://47.254.247.135'
-  host = 'localhost:3000'
+  # host = 'localhost:3000'
+  host = ENV['MAILHOST']
   config.action_mailer.default_url_options = { host: host }
 
   # SMTP settings for gmail
