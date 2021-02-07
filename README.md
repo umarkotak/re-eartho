@@ -12,6 +12,7 @@
 
 ## Misc
 - disabling less secure on gmail: https://myaccount.google.com/u/3/lesssecureapps?pli=1&rapt=AEjHL4OkGy-SKte6QWlOGYzTUUygs8HyC_NT_fOLhrgnIDGPd3LpHC8KngkmpRrrqmQzcvc0FC6MKYc6tWaTuXzQfqhS6lVNBQ
+- fa icon list https://fontawesome.com/icons?d=gallery
 
 ## Deployments
 - screen -list
