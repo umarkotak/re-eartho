@@ -6,7 +6,15 @@ namespace :scrapper do
   task :youtube => :environment do |_task, args|
     puts "START SCRAPPING YOUTUBE DATA #{Time.now}"
 
-    c = Category.create(category_type: 'default', title: 'curiosity', position: '6', tag: 'none', feed_id: Feed.first.id)
+    title = 'daily dose'
+
+    c = Category.find_by(title: title)
+    if c.present?
+      puts "CATEGORY #{title} ALREADY EXISTS"
+    else
+      c = Category.create(category_type: 'default', title: title, position: '7', tag: 'none', feed_id: Feed.first.id)
+      puts "CREATED NEW CATEGORY #{title}"
+    end
 
     items = []
     nextPageToken = nil
@@ -15,7 +23,7 @@ namespace :scrapper do
     for i in 1..1 do
       params = [
         'key=AIzaSyDL9jzmqn7zo2EDs0LGT82wu3_sQykZqaE',
-        'channelId=UCsXVk37bltHxD1rDPwtNM8Q',
+        'channelId=UCb8vrqP8Z7Oz9ZTYvUtjUHQ',
         'part=snippet,id',
         'order=date',
         'maxResults=50'
@@ -28,7 +36,6 @@ namespace :scrapper do
       response_parsed = JSON.parse(response, symbolize_names: true)
       nextPageToken = response_parsed[:nextPageToken]
       items += response_parsed[:items].map do |item|
-        # next if !item[:snippet][:title].include?('[English Sub]')
         creation_params = {
           title: item[:snippet][:title],
           position: 1,
@@ -43,7 +50,14 @@ namespace :scrapper do
           user_id: 1
         }
 
-        Content.create!(creation_params)
+        content = Content.find_by(title: creation_params[:title])
+        if content
+          puts "CONTENT #{creation_params[:title]} ALREADY EXISTS"
+        else
+          puts "ITEM DATA: #{creation_params}"
+          Content.create!(creation_params)
+          puts "CREATED NEW CONTENT #{creation_params[:title]}"
+        end
       end
     end
 
@@ -57,3 +71,5 @@ end
 
 # 'channelId=UCGbshtvS9t-8CW11W7TooQg', = muse asia
 # 'channelId=UCsXVk37bltHxD1rDPwtNM8Q', = kurzgesagt
+
+# 'channelId=UCb8vrqP8Z7Oz9ZTYvUtjUHQ', = daniel labelle
