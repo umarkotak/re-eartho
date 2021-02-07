@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   options 'users/register', to: 'cors#allow'
   post 'users/login', to: 'global/users#login'
   options 'users/login', to: 'cors#allow'
+  post 'users/ask_forgot_password', to: 'global/users#ask_forgot_password'
+  options 'users/ask_forgot_password', to: 'cors#allow'
 
   get 'profile/me', to: 'global/profile#me'
   options 'profile/me', to: 'cors#allow'

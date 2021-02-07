@@ -10,7 +10,16 @@ module Global
       render_response(data: result)
     end
 
+    def ask_forgot_password
+      execute_reset_password_sequence
+      render_response(data: { email: email })
+    end
+
     private
+
+    def email
+      params[:email]
+    end
 
     def register_params
       @register_params ||= params.permit(:username, :email, :password, :password_confirmation)
@@ -53,6 +62,10 @@ module Global
         role: user.role,
         avatar_url: user.generated_avatar_url
       }
+    end
+
+    def execute_reset_password_sequence
+
     end
   end
 end
