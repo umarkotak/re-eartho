@@ -1,24 +1,11 @@
-# README
+# MARIAN LOL BACKEND
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Category
+- media/news
+- wiki/community/forum
+- entertainment
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Description
+- marianlol, merupakan website yang bergerak di bidang entertainment, new, community-forum.
+- setiap user dapat mendaftarkan diri dengan menggunakan email dan kemudian bisa berkontribusi di platform ini.
+- user dapat

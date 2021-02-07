@@ -12,11 +12,6 @@ module Global
       render_response(data: serialize_content(content))
     end
 
-    def popular
-      popular_contents = fetch_popular_contents
-      render_response(data: popular_contents)
-    end
-
     def create
       authenticate_user
       created_content = Content.create!(create_content_params)
@@ -46,10 +41,43 @@ module Global
       render_response(data: { id: content.id })
     end
 
+    def popular
+      popular_contents = fetch_popular_contents
+      render_response(data: popular_contents)
+    end
+
+    def recommendation
+      recommended_contents = fetch_recomended_contents
+      render_response(data: recommended_contents)
+    end
+
     private
 
     def content_id
       params[:id]
+    end
+
+    def category_id
+      params[:category_id]
+    end
+
+    def create_content_params
+      params.permit(:title, :description, :text_content, :image_url, :video_url, :category_id)
+        .to_h.merge!(user_id: @user.id)
+    end
+
+    def fetch_popular_contents
+      contents = Content.includes(:user).order("count_like desc").limit(10)
+      contents.map do |content|
+        serialize_content(content)
+      end
+    end
+
+    def fetch_recomended_contents
+      contents = Content.includes(:user).where(category_id: category_id).order('RANDOM()').limit(rand(5..10))
+      contents.map do |content|
+        serialize_content(content)
+      end
     end
 
     def serialize_content(content)
@@ -87,18 +115,6 @@ module Global
         },
         user_who_likes: user_who_likes.sample(3)
       }
-    end
-
-    def create_content_params
-      params.permit(:title, :description, :text_content, :image_url, :video_url, :category_id)
-        .to_h.merge!(user_id: @user.id)
-    end
-
-    def fetch_popular_contents
-      contents = Content.order("count_like desc").limit(10)
-      contents.map do |content|
-        serialize_content(content)
-      end
     end
 
     def serialize_category(category)

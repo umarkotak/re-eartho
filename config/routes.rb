@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   get 'contents/popular', to: 'global/contents#popular'
   options 'contents/popular', to: 'cors#allow'
+  get 'contents/recommendation', to: 'global/contents#recommendation'
+  options 'contents/recommendation', to: 'cors#allow'
   patch 'contents/:id', to: 'global/contents#update'
   delete 'contents/:id', to: 'global/contents#delete'
   get 'contents/:id', to: 'global/contents#show'
