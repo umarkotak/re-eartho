@@ -1,5 +1,11 @@
 module Global
   class ContentsController < ApiController
+    def index
+      category = Category.find(params[:category_id])
+      results = serialize_category(category)
+      render_response(data: results)
+    end
+
     def show
       fetch_user
       content = Content.includes(:user, content_comments: [:user], content_likes: [:user]).find(content_id)
@@ -93,6 +99,31 @@ module Global
       contents.map do |content|
         serialize_content(content)
       end
+    end
+
+    def serialize_category(category)
+      {
+        category_id: category.id,
+        category_type: category.category_type,
+        title: category.title,
+        contents: category.contents.map do |content|
+          {
+            content_id: content.id,
+            content_type: content.content_type,
+            title: content.title,
+            description: content.description,
+            image_url: content.image_url,
+            count_like: content.count_like.to_i,
+            count_comment: content.count_comment.to_i,
+            tag: content.tag,
+            creator_id: content.user.id,
+            creator_name: content.user.username,
+            creator_avatar_url: content.user.generated_avatar_url,
+            created_at: content.created_at.localtime.strftime("%Y-%m-%d %H:%M"),
+            liked_by_me: content.liked_by_user(@user&.id)
+          }
+        end
+      }
     end
   end
 end

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'contents/:id', to: 'global/contents#show'
   options 'contents/:id', to: 'cors#allow'
   post 'contents', to: 'global/contents#create'
+  get 'contents', to: 'global/contents#index'
   options 'contents', to: 'cors#allow'
   post 'contents/:id/comment', to: 'global/content_comments#comment'
   options 'contents/:id/comment', to: 'cors#allow'
