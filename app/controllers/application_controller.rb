@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def rescue_standard_error(exception)
+    Rails.logger.error("[ERROR STACK TRACE]: #{exception.message}")
     render_response(
       data: {},
       success: false,
