@@ -15,6 +15,15 @@ module Global
       render_response(data: { email: email })
     end
 
+    def renew_password
+      @user = User.find_by(forgot_token: renew_password_params[:forgot_token])
+      unless @user.present?
+        raise 'Unauthorized request'
+      end
+      execute_renew_password_sequence
+      render_response(data: {})
+    end
+
     private
 
     def email
@@ -23,6 +32,10 @@ module Global
 
     def register_params
       @register_params ||= params.permit(:username, :email, :password, :password_confirmation)
+    end
+
+    def renew_password_params
+      @renew_password_params ||= params.permit(:password, :password_confirmation, :forgot_token)
     end
 
     def execute_register
@@ -53,7 +66,7 @@ module Global
       end
 
       session_key = "Bearer #{SecureRandom.uuid}-#{SecureRandom.uuid}-#{SecureRandom.uuid}"
-      user.update!(session_key: session_key)
+      user.update!(session_key: session_key, forgot_token: nil)
 
       {
         session_key: session_key,
@@ -65,7 +78,23 @@ module Global
     end
 
     def execute_reset_password_sequence
+      payloads = {email: email}
+      user = User.find_by(email: email)
+      return unless user.present?
+      user.forgot_token = "#{SecureRandom.uuid}-#{SecureRandom.uuid}"
+      user.save!
+      ForgetPasswordMailer.with(user: user).new_forget_password_mailer.deliver_now
+    end
 
+    def execute_renew_password_sequence
+      if renew_password_params[:password] != renew_password_params[:password_confirmation]
+        raise 'password and password confirmation missmatch'
+      end
+
+      pass_encrypted = Digest::SHA2.hexdigest(renew_password_params[:password])
+      @user.password_encrypted = pass_encrypted
+      @user.forgot_token = nil
+      @user.save!
     end
   end
 end

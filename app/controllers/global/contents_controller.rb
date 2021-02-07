@@ -22,8 +22,7 @@ module Global
       authenticate_user
       content = Content.find(content_id)
       if content.user_id != @user.id
-        render_response(errors: ['forbidden access'], status: 401)
-        return
+        raise 'Forbidden access'
       end
       content.assign_attributes(create_content_params)
       content.save!
@@ -34,8 +33,7 @@ module Global
       authenticate_user
       content = Content.find(content_id)
       if content.user_id != @user.id
-        render_response(errors: ['forbidden access'], status: 401)
-        return
+        raise 'Forbidden access'
       end
       content.delete
       render_response(data: { id: content.id })
