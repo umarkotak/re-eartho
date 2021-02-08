@@ -85,6 +85,7 @@ module Global
 
       {
         id: content.id,
+        category_id: content.category_id,
         content_type: content.content_type,
         title: content.title,
         description: content.description,
