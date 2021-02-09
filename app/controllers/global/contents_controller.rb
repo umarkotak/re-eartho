@@ -75,7 +75,7 @@ module Global
       contents = Content.includes(:user).where(category_id: category_id).order('RANDOM()').limit(rand(5..10))
       contents.map do |content|
         serialize_content(content)
-      end
+      end.reject { |c| c.id == params[:content_id] }
     end
 
     def serialize_content(content)
