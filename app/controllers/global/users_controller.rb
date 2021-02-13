@@ -1,6 +1,8 @@
 module Global
   class UsersController < ApiController
     def index
+      users = User.includes(:contents).all.order('RANDOM()')
+      render_response(data: serialized_users(users))
     end
 
     def register
@@ -98,6 +100,17 @@ module Global
       @user.password_encrypted = pass_encrypted
       @user.forgot_token = nil
       @user.save!
+    end
+
+    def serialized_users(users)
+      users.map do |user|
+        {
+          id: user.id,
+          username: user.username,
+          total_posts: user.contents.size,
+          image_url: user.generated_avatar_url
+        }
+      end
     end
   end
 end
