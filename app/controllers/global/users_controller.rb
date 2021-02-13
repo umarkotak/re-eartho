@@ -1,5 +1,8 @@
 module Global
   class UsersController < ApiController
+    def index
+    end
+
     def register
       created_user = execute_register
       render_response(data: { id: created_user.id })

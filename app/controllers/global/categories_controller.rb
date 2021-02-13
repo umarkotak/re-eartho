@@ -11,7 +11,8 @@ module Global
       categories.map do |category|
         {
           id: category.id,
-          title: category.title
+          title: category.title,
+          fa_icon: category.fa_icon
         }
       end
     end
