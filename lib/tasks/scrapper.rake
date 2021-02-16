@@ -64,7 +64,7 @@ namespace :scrapper do
     puts "FINISH SCRAPPING YOUTUBE DATA #{Time.now}"
   end
 
-  # exec sample: bin/rake 'scrapper:youtube["live hacks", 13, "UCGbshtvS9t-8CW11W7TooQg"]'
+  # exec sample: bin/rake 'scrapper:youtube_v2[live hacks, 13, UC295-Dw_tDNtZXFeAPAW6Aw]'
   desc 'scrap youtube data'
   task :youtube_v2, %i[category_title user_id channel_id] => :environment do |_task, args|
     puts "START SCRAPPING YOUTUBE DATA #{Time.now}"
@@ -137,3 +137,7 @@ end
 # 'channelId=UCb8vrqP8Z7Oz9ZTYvUtjUHQ', = daniel labelle
 # 'channelId=UC1dI4tO13ApuSX0QeX8pHng', = gadgedin
 # 'channelId=UC295-Dw_tDNtZXFeAPAW6Aw', = 5-minutes-craft
+# 'channelId=UCAuUUnT6oDeKwE6v1NGQxug', = ted
+# bin/rake 'scrapper:youtube_v2[motivating, 13, UCAuUUnT6oDeKwE6v1NGQxug]'
+# bin/rake 'scrapper:youtube_v2[news, 13, UCPvi3d3MAILSVKRIU_1Mnkg]'
+# bin/rake 'scrapper:youtube_v2[fun, 13, UCzn2gx8zzhF0A4Utk8TEDNQ]'
